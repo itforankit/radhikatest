@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Share Price Predictor</title>
+    <meta
+      name="description"
+      content="Machine learning forecasts of equity closing prices with backtested accuracy metrics."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AI</span>
+        <div>
+          <h1>Share Price Predictor</h1>
+          <p>Technical-indicator machine learning, backtested on unseen sessions</p>
+        </div>
+      </div>
+      <span id="source-badge" class="badge badge-muted">idle</span>
+    </header>
+
+    <main>
+      <form id="controls" class="panel controls" autocomplete="off">
+        <label class="field">
+          <span>Ticker</span>
+          <input id="ticker" name="ticker" value="AAPL" placeholder="AAPL, MSFT, TCS.NS" required />
+        </label>
+        <label class="field">
+          <span>Forecast horizon</span>
+          <select id="horizon" name="horizon">
+            <option value="5">5 sessions</option>
+            <option value="7" selected>7 sessions</option>
+            <option value="14">14 sessions</option>
+            <option value="30">30 sessions</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Training window</span>
+          <select id="period" name="period">
+            <option value="1y">1 year</option>
+            <option value="2y" selected>2 years</option>
+            <option value="5y">5 years</option>
+          </select>
+        </label>
+        <button id="submit" type="submit" class="primary">Run prediction</button>
+        <div class="presets">
+          <span>Quick picks</span>
+          <button type="button" data-ticker="AAPL">AAPL</button>
+          <button type="button" data-ticker="MSFT">MSFT</button>
+          <button type="button" data-ticker="NVDA">NVDA</button>
+          <button type="button" data-ticker="RELIANCE.NS">RELIANCE.NS</button>
+        </div>
+      </form>
+
+      <p id="error" class="error" hidden></p>
+
+      <section class="kpis" id="kpis">
+        <article class="panel kpi">
+          <h2>Last close</h2>
+          <p class="kpi-value" id="kpi-last">—</p>
+          <p class="kpi-sub" id="kpi-last-date">awaiting run</p>
+        </article>
+        <article class="panel kpi">
+          <h2>Target price</h2>
+          <p class="kpi-value" id="kpi-target">—</p>
+          <p class="kpi-sub" id="kpi-target-date">—</p>
+        </article>
+        <article class="panel kpi">
+          <h2>Expected change</h2>
+          <p class="kpi-value" id="kpi-change">—</p>
+          <p class="kpi-sub" id="kpi-trend">—</p>
+        </article>
+        <article class="panel kpi">
+          <h2>Directional accuracy</h2>
+          <p class="kpi-value" id="kpi-direction">—</p>
+          <p class="kpi-sub" id="kpi-holdout">holdout backtest</p>
+        </article>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-head">
+          <h2>Price history &amp; forecast</h2>
+          <p id="model-name">—</p>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-forecast"></canvas></div>
+      </section>
+
+      <div class="grid-2">
+        <section class="panel chart-panel">
+          <div class="panel-head">
+            <h2>Backtest: predicted vs actual</h2>
+            <p id="metrics-line">—</p>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-backtest"></canvas></div>
+        </section>
+        <section class="panel chart-panel">
+          <div class="panel-head">
+            <h2>Top signal drivers</h2>
+            <p>Standardized model weights</p>
+          </div>
+          <div class="chart-wrap"><canvas id="chart-features"></canvas></div>
+        </section>
+      </div>
+
+      <p class="disclaimer">
+        Educational project. Forecasts are statistical extrapolations of historical prices and are
+        not investment advice.
+      </p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
