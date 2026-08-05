@@ -34,6 +34,9 @@ uvicorn app.main:app --reload --port 8000
 
 Open http://localhost:8000 for the dashboard, or http://localhost:8000/docs for the OpenAPI UI.
 
+For a step-by-step walkthrough (prerequisites, Windows commands, verification, troubleshooting) see
+[docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md).
+
 ## API
 
 | Endpoint | Description |
